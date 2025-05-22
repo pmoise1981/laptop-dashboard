@@ -1,13 +1,15 @@
-# Dockerfile
 FROM python:3.11-slim
+
 WORKDIR /app
-COPY . .
+
+# Copy project files
+COPY app/ app/
+COPY data/ data/
+COPY requirements.txt .
+
+# Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
-CMD ["python", "app/dashboard.py"]
-# Dockerfile
-FROM python:3.11-slim
-WORKDIR /app
-COPY . .
-RUN pip install --no-cache-dir -r requirements.txt
-CMD ["python", "app/dashboard.py"]
+
+# Run scraper then dashboard
+CMD ["sh", "-c", "python3 app/scraper.py && python3 app/dashboard.py"]
 

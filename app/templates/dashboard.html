@@ -1,0 +1,52 @@
+<!-- app/templates/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Laptop Dashboard</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2em;
+      background-color: #f4f4f4;
+    }
+    h1 {
+      color: #333;
+    }
+    .chart {
+      margin: 2em 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧾 Laptop Price Dashboard</h1>
+
+  <form method="POST">
+    <label for="max_price">💰 Filter by max price ($):</label>
+    <input type="number" step="0.01" name="max_price" value="{{ selected_max }}">
+    <button type="submit">Apply</button>
+  </form>
+
+  <p><strong>Total products:</strong> {{ total }}</p>
+  <p><strong>Under $100:</strong> {{ cheap }}</p>
+  <p><strong>Max Price:</strong> ${{ "%.2f"|format(max_price) }}</p>
+
+  <h3>📝 Top Words in Titles:</h3>
+  <ul>
+    {% for word, count in top_words %}
+      <li>{{ word }} - {{ count }} times</li>
+    {% endfor %}
+  </ul>
+
+  <div class="chart">
+    <h3>📊 Price Distribution</h3>
+    {{ price_chart | safe }}
+  </div>
+
+  <div class="chart">
+    <h3>🗣️ Review Count Distribution</h3>
+    {{ review_chart | safe }}
+  </div>
+</body>
+</html>
+
